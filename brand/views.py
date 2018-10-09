@@ -20,19 +20,19 @@ from brand.serializers import BrandSerializer
 def brand_list(request):
     """
     List all code brand, or create a new brand.
-    """
+    """    
     if request.method == 'GET':
-        brands = Brand.objects.all()
+        brands = Brand.objects.all()    
         serializer = BrandSerializer(brands, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-    # elif request.method == 'POST':
-    #     data = JSONParser().parse(request)
-    #     serializer = BrandSerializer(data=data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return JsonResponse(serializer.data, status=201)
-    #     return JsonResponse(serializer.errors, status=400)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = BrandSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
 def brand_detail(request, pk):

@@ -2,7 +2,7 @@ from django.db import models
 from state.models import State
 
 # Create your models here.
-class Kind(models.Model):
+class VehicleKind(models.Model):
     
     name = models.CharField(max_length=70,unique=True)
     image = models.ImageField(upload_to = 'kinds/', default = 'kinds/None/no-img.jpg')

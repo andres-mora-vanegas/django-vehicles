@@ -19,9 +19,7 @@ from rest_framework import routers, serializers, viewsets
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'manager/', include('manager.urls')),
-    url(r'brand/', include('brand.urls')),
-    url(r'^api-auth/', include('rest_framework.urls'))
-
+    url(r'^admin/', admin.site.urls),  
+    url(r'^', include('brand.urls')),
+    url(r'^', include('vehicle.urls'))
 ]
