@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from .models import ClientVehicle
+from .serializers import ClientVehicleSerializer
+from rest_framework import routers, serializers, viewsets
 
-# Create your views here.
+class ClientVehicleViewSet(viewsets.ModelViewSet):
+    queryset = ClientVehicle.objects.all()
+    serializer_class = ClientVehicleSerializer

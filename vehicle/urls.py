@@ -2,9 +2,17 @@ from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
-urlpatterns = [
-    url(r'^vehicle/$', views.vehicle_list),
-    url(r'^vehicle/(?P<pk>[0-9]+)/$', views.vehicle_detail),
-]
+from rest_framework import routers, serializers, viewsets
+from django.contrib.auth.models import User
+from .serializers import VehicleSerializer,UserSerializer
 
-urlpatterns =format_suffix_patterns(urlpatterns)
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'vehicles', views.VehicleViewSet)
+#router.register(r'vehicle', views.vehicle_list)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    url(r'^', include(router.urls)),
+]

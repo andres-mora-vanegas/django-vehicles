@@ -1,24 +1,38 @@
 from django.shortcuts import render
 from .models import Vehicle
-from .serializers import VehicleSerializer
+
+from django.contrib.auth.models import User
+from .serializers import VehicleSerializer,UserSerializer
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
+from rest_framework import routers, serializers, viewsets
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class VehicleViewSet(viewsets.ModelViewSet):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
+
+
 # Create your views here.
 @csrf_exempt
 def vehicle_list(request):
     """
     List all code vehicle, or create a new vehicle.
-    """    
+    """
     if request.method == 'GET':
-        brand_=request.GET.get('brand')        
+        brand_=request.GET.get('brand')
         if brand_ is not None:
-            vehicles = Vehicle.objects.filter(brand=brand_)    
+            vehicles = Vehicle.objects.filter(brand=brand_)
         else:
-            vehicles = Vehicle.objects.all()    
+            vehicles = Vehicle.objects.all()
 
         serializer = VehicleSerializer(vehicles, many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -44,3 +58,4 @@ def vehicle_detail(request, pk):
     if request.method == 'GET':
         serializer = VehicleSerializer(vehicle)
         return JsonResponse(serializer.data)
+

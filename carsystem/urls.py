@@ -17,9 +17,14 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from rest_framework import routers, serializers, viewsets
 
+from client import views as clientView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),  
+    url(r'^admin/', admin.site.urls),
     url(r'^', include('brand.urls')),
-    url(r'^', include('vehicle.urls'))
+    url(r'^', include('vehicle.urls')),
+    url(r'^client', clientView.ClientTask.as_view()),
+    url(r'^', include('client_vehicle.urls')),
+    url(r'^', include('state.urls')),
+    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
