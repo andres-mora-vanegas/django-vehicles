@@ -1,6 +1,6 @@
 from django.db import models
-from Country.model import Country
-from State.model import State
+from country.models import Country
+from state.models import State
 # Create your models here.
 
 class City(models.Model):

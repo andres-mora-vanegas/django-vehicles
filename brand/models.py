@@ -1,6 +1,6 @@
 from django.db import models
 
-from State.model import State
+from state.models import State
 
 # Create your models here.
 class Brand(models.Model):

@@ -1,7 +1,7 @@
 from django.db import models
-from Client.models import Client
-from Vehicle.models import Vehicle
-from State.models import State
+from client.models import Client
+from vehicle.models import Vehicle
+from state.models import State
 
 # Create your models here.
 class ClientVehicle(models.Model):
@@ -15,4 +15,4 @@ class ClientVehicle(models.Model):
     state= models.ForeignKey(State,on_delete=models.CASCADE,default=1)
 
     def __str__(self):
-        return self.user.first_name
+        return self.client.first_name

@@ -1,9 +1,9 @@
 from django.db import models
 
-from City.model import City
-from Brand.model import Brand
-from Kind.model import Kind
-from State.model import State
+from city.models import City
+from brand.models import Brand
+from vehicle_kind.models import Kind
+from state.models import State
 
 # Create your models here.
 class Vehicle(models.Model):
@@ -19,7 +19,7 @@ class Vehicle(models.Model):
     state= models.ForeignKey(State,on_delete=models.CASCADE,default=1)
 
     class Meta:
-        unique_together = (("brand", "city"),)
+        unique_together = (("enrollment", "city"),)
 
     def __str__(self):
         return self.enrollment

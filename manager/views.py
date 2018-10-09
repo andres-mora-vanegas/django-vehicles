@@ -6,8 +6,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from manager.serializers import UserSerializer, GroupSerializer, ClientSerializer
-from manager.models import Client
+from manager.serializers import UserSerializer, GroupSerializer
+# ClientSerializer
+# from manager.models import Client
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,9 +27,9 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class ClientViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Client.objects.all()
-    serializer_class = ClientSerializer
+# class ClientViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows groups to be viewed or edited.
+#     """
+#     queryset = Client.objects.all()
+#     serializer_class = ClientSerializer

@@ -39,7 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #
-    'manager',
+    #'manager',
+    'client',
+    'client_vehicle',
+    'brand',
+    'vehicle_kind',
+    'vehicle',
+    'state',
+    'country',
+    'city',
     'rest_framework',
 ]
 
@@ -134,3 +142,11 @@ MEDIA_ROOT =  os.path.dirname(os.path.abspath(__file__))
 MEDIA_URL = '/uploads/'
 # BRANDS_URL = '/brands/'
 # KINDS_URL = '/kinds/'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
