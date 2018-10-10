@@ -1,17 +1,21 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, schema
+
+from rest_framework.decorators import list_route
 
 from .models import ClientVehicle
-from .serializers import ClientVehicleSerializer
+from vehicle.models import Vehicle
+from .serializers import ClientVehicleSerializer, ClientVehicleDTOForm
 from rest_framework import routers, serializers, viewsets
 
-class ClientVehicleTask(APIView):   
-    
+
+class ClientVehicleTask(APIView):
     def get(self, request, format=None):
-        id_ = request.GET.get('id')
-        client_ = request.GET.get('client')
-        vehicle_ = request.GET.get('vehicle')
+        id_ = request.GET.get("id")
+        client_ = request.GET.get("client")
+        vehicle_ = request.GET.get("vehicle")
         clientVehicle = None
         try:
             if id_:
@@ -21,7 +25,7 @@ class ClientVehicleTask(APIView):
             elif vehicle_:
                 clientVehicles = ClientVehicle.objects.filter(vehicle_id=vehicle_)
             else:
-                clientVehicles = ClientVehicle.objects.all()            
+                clientVehicles = ClientVehicle.objects.all()
 
             if clientVehicle is not None:
                 serializer = ClientVehicleSerializer(clientVehicle)
@@ -29,13 +33,10 @@ class ClientVehicleTask(APIView):
             elif clientVehicles:
                 serializer = ClientVehicleSerializer(clientVehicles, many=True)
                 return Response(serializer.data)
-            return Response(status=status.HTTP_404_NOT_FOUND)        
+            return Response(status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(e)
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
-
-    
-       
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # def put(self, request, format=None):
     #     name = request.GET.get('name')
@@ -49,7 +50,7 @@ class ClientVehicleTask(APIView):
     #     return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
-        
+
         # state = State(id=1,name='activo')
         # state.save()
         # print(state)
@@ -63,8 +64,6 @@ class ClientVehicleTask(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        
 
     # def delete(self, request, format=None):
     #     name = request.GET.get('name')
@@ -73,3 +72,43 @@ class ClientVehicleTask(APIView):
     #         animal.delete()
     #         return Response(status=status.HTTP_204_NO_CONTENT)
     #     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def manageVehicleEnroll(request):
+    try:
+        form_data = ClientVehicleDTOForm(data=request.data)
+        print(request.data)
+        response_data = None
+        if form_data.is_valid():
+            print("valido")
+            print(form_data.data)
+            city_id = form_data.data.get("vehicle").get("city")
+            brand_id = form_data.data.get("vehicle").get("brand")
+            kind_id = form_data.data.get("vehicle").get("kind")
+            enrollment = form_data.data.get("vehicle").get("enrollment")
+            client_id = form_data.data.get("client").get("id")
+            vehicle = Vehicle.objects.filter(enrollment=enrollment, city_id=city_id)
+            if vehicle.count() < 1:
+                vehicle = Vehicle(
+                    enrollment=enrollment,
+                    city_id=city_id,
+                    brand_id=brand_id,
+                    kind_id=kind_id,
+                )
+                vehicle.save()
+                vehicle_id=vehicle.id
+                client_vehicle=ClientVehicle(client_id=client_id,vehicle_id=vehicle_id)
+                client_vehicle.save()
+                response_data = {"state": True,"message":"Vehículo creado y vinculado correctamente"}
+            else:
+                response_data = {"state": False,"message":"El vehículo ya se encuentra creado"}
+                return Response(response_data, status=status.HTTP_202_ACCEPTED)
+                response_data = form_data.data
+        else:
+            response_data = {"state": False,"message":"Faltan datos por registrar"}
+        return Response(response_data, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response(status=status.HTTP_204_NO_CONTENT)

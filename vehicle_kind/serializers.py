@@ -7,4 +7,4 @@ class VehicleKindSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VehicleKind
-        fields = ('name', 'image')
+        fields = ('id','name', 'image')
