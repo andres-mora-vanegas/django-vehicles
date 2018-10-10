@@ -22,10 +22,11 @@ class ClientTask(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     # def put(self, request, format=None):
-    #     name = request.GET.get('name')
-    #     animal = Animal.objects.get(name=name)
-    #     if animal:
-    #         serializer = ClientSerializer(animal, data=request.data)
+    #     id = request.GET.get('id')
+    #     client = Client.objects.get(id=id)
+    #     print(client)
+    #     if client:
+    #         serializer = ClientSerializer(client, data=request.data)
     #         if serializer.is_valid():
     #             serializer.save()
     #             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -33,11 +34,41 @@ class ClientTask(APIView):
     #     return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
-        serializer = ClientSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            id=request.data.get('id')
+            identification=request.data.get('identification')
+            response_data = None
+            print(request.data)
+            if id is not None:
+                client = Client.objects.get(id=id)
+                if client:
+                    serializer = ClientSerializer(client, data=request.data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+            else:
+                print('else')
+                client = Client.objects.filter(identification=identification).first()
+                print(client)
+                if client is None:
+                    print('none')
+                    serializer = ClientSerializer(data=request.data)
+                    if serializer.is_valid():
+                        print('valid')
+                        serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                else:
+                    response_data={
+                        "state":False,
+                        "message":"El número de documento ya se encuentra registrado"
+                    }
+                    return Response(response_data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(e)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     # def delete(self, request, format=None):
     #     name = request.GET.get('name')

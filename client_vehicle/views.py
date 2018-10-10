@@ -37,17 +37,7 @@ class ClientVehicleTask(APIView):
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    # def put(self, request, format=None):
-    #     name = request.GET.get('name')
-    #     animal = Animal.objects.get(name=name)
-    #     if animal:
-    #         serializer = ClientSerializer(animal, data=request.data)
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             return Response(serializer.data, status=status.HTTP_200_OK)
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
+    
 
     def post(self, request, format=None):
 
@@ -78,11 +68,8 @@ class ClientVehicleTask(APIView):
 def manageVehicleEnroll(request):
     try:
         form_data = ClientVehicleDTOForm(data=request.data)
-        print(request.data)
         response_data = None
         if form_data.is_valid():
-            print("valido")
-            print(form_data.data)
             city_id = form_data.data.get("vehicle").get("city")
             brand_id = form_data.data.get("vehicle").get("brand")
             kind_id = form_data.data.get("vehicle").get("kind")
@@ -97,16 +84,24 @@ def manageVehicleEnroll(request):
                     kind_id=kind_id,
                 )
                 vehicle.save()
-                vehicle_id=vehicle.id
-                client_vehicle=ClientVehicle(client_id=client_id,vehicle_id=vehicle_id)
+                vehicle_id = vehicle.id
+                client_vehicle = ClientVehicle(
+                    client_id=client_id, vehicle_id=vehicle_id
+                )
                 client_vehicle.save()
-                response_data = {"state": True,"message":"Vehículo creado y vinculado correctamente"}
+                response_data = {
+                    "state": True,
+                    "message": "Vehículo creado y vinculado correctamente",
+                }
             else:
-                response_data = {"state": False,"message":"El vehículo ya se encuentra creado"}
+                response_data = {
+                    "state": False,
+                    "message": "El vehículo ya se encuentra registrado",
+                }
                 return Response(response_data, status=status.HTTP_202_ACCEPTED)
                 response_data = form_data.data
         else:
-            response_data = {"state": False,"message":"Faltan datos por registrar"}
+            response_data = {"state": False, "message": "Faltan datos por registrar"}
         return Response(response_data, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
