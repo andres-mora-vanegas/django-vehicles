@@ -75,13 +75,13 @@ def manageVehicleEnroll(request):
             kind_id = form_data.data.get("vehicle").get("kind")
             enrollment = form_data.data.get("vehicle").get("enrollment")
             client_id = form_data.data.get("client").get("id")
-            vehicle = Vehicle.objects.filter(enrollment=enrollment, city_id=city_id)
+            vehicle = Vehicle.objects.filter(enrollment=enrollment, city_id=city_id.get('id'))
             if vehicle.count() < 1:
                 vehicle = Vehicle(
                     enrollment=enrollment,
-                    city_id=city_id,
-                    brand_id=brand_id,
-                    kind_id=kind_id,
+                    city_id=city_id.get('id'),
+                    brand_id=brand_id.get('id'),
+                    kind_id=kind_id.get('id'),
                 )
                 vehicle.save()
                 vehicle_id = vehicle.id

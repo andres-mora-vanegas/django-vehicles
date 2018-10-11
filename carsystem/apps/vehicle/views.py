@@ -38,10 +38,10 @@ class VehicleTask(APIView):
 
     # def put(self, request, format=None):
     #     id = request.GET.get('id')
-    #     vehicle = Vehicle.objects.get(id=id)
+    #     vehicle = Vehicle.objects.filter(id=id).first()
     #     print(vehicle)
     #     if vehicle:
-    #         serializer = VehicleSerializer(vehicle, data=request.data)
+    #         serializer = VehicleSerializer(vehicle, data=request.data.get('vehicle'))
     #         if serializer.is_valid():
     #             serializer.save()
     #             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -50,36 +50,35 @@ class VehicleTask(APIView):
 
     def post(self, request, format=None):
         try:
-           
-            id=request.data.get('vehicle').get('id')
-           
+            id=request.data.get('id')
             enrollment=request.data.get('enrollment')
-           
-            city_id=request.data.get('vehicle').get('city')
-           
+            city_id=request.data.get('city')
             response_data = None
-            print(request.data)
             if id is not None:
-                print('not none')
                 vehicle = Vehicle.objects.get(id=id)
-                print(vehicle)
                 if vehicle:
-                    print('vehicle ok')
-                    serializer = VehicleSerializer(vehicle, data=request.data)
-                    if serializer.is_valid():
-                        print('serializer valid')
-                        serializer.save()
-                        return Response(serializer.data, status=status.HTTP_200_OK)
-                return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+                    vehicle.enrollment=enrollment
+                    vehicle.city_id=city_id.get('id')
+                    vehicle.brand_id=request.data.get('brand').get('id')
+                    vehicle.kind_id=request.data.get('kind').get('id')
+                    response_data={
+                            "state":True,
+                            "message":"Vehículo actualizado correctamente"
+                        }
+                    vehicle.save()
+                    return Response(response_data, status=status.HTTP_200_OK)
+                else:
+                    response_data={
+                        "state":False,
+                        "message":"Ocurrió un error al actualizar el vehículo"
+                    }
+                    return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+                return Response(response_data, status=status.HTTP_404_NOT_FOUND)
             else:
-                print('else')
                 vehicle = Vehicle.objects.filter(enrollment=enrollment,city_id=city_id).first()
-                print(vehicle)
                 if vehicle is None:
-                    print('none')
                     serializer = VehicleSerializer(data=request.data)
                     if serializer.is_valid():
-                        print('valid')
                         serializer.save()
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 else:

@@ -15,7 +15,7 @@ class VehicleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vehicle
-        
+        # read_only_fields = ('created', 'modified','state')
         fields = ('id', 'enrollment','city','brand','kind','created','modified','state')
 
 class VehicleDTOForm(forms.Form):
