@@ -10,10 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os,sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.dirname(os.path.dirname(__file__))
+
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+sys.path.append(os.path.join(PROJECT_PATH, 'apps/'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -68,7 +72,9 @@ ROOT_URLCONF = 'carsystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(PROJECT_PATH, 'template'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +94,7 @@ WSGI_APPLICATION = 'carsystem.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'defaulti': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
@@ -100,7 +106,7 @@ DATABASES = {
         'PASSWORD': 'c--Pz_BlYToNyDREz_ENlmnrR01AxwVl',
         'PORT': 5432,
     },
-    'default': {
+    'defaulti': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
@@ -147,9 +153,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+
 STATIC_URL = '/static/'
-MEDIA_ROOT =  os.path.dirname(os.path.abspath(__file__))
-MEDIA_URL = '/uploads/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # BRANDS_URL = '/brands/'
 # KINDS_URL = '/kinds/'
 
@@ -165,3 +175,4 @@ REST_FRAMEWORK = {
     #'PAGE_SIZE': 10
 }
 CORS_ORIGIN_ALLOW_ALL = True
+

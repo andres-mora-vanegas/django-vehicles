@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "enrollment": "abc123",
+        "city": 4,
+        "brand": {
+            "id": 1,
+            "name": "Mazda",
+            "image": "/uploads/brands/mazda.ico",
+            "created": "2018-10-09T03:27:40.100927Z",
+            "modified": "2018-10-09T03:27:40.100989Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Autom\u00f3vil",
+            "image": "/uploads/kinds/automovil_SLpc5o3.png"
+        },
+        "created": "2018-10-09T03:28:35.212784Z",
+        "modified": "2018-10-09T03:29:45.454758Z",
+        "state": 1
+    },
+    {
+        "id": 2,
+        "enrollment": "abc123",
+        "city": 1,
+        "brand": {
+            "id": 2,
+            "name": "Suzuki",
+            "image": "/uploads/brands/suzuki.png",
+            "created": "2018-10-09T03:27:50.289712Z",
+            "modified": "2018-10-09T03:27:50.289843Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Cami\u00f3n",
+            "image": "/uploads/kinds/cami%C3%B3n.png"
+        },
+        "created": "2018-10-09T03:28:47.164108Z",
+        "modified": "2018-10-09T03:28:47.164171Z",
+        "state": 1
+    },
+    {
+        "id": 3,
+        "enrollment": "def234",
+        "city": 1,
+        "brand": {
+            "id": 3,
+            "name": "Honda",
+            "image": "/uploads/brands/honda.png",
+            "created": "2018-10-09T03:28:02.226721Z",
+            "modified": "2018-10-09T03:28:02.226859Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Camioneta",
+            "image": "/uploads/kinds/camioneta_o5Hl3tQ.png"
+        },
+        "created": "2018-10-09T03:30:02.397623Z",
+        "modified": "2018-10-09T03:30:02.397685Z",
+        "state": 1
+    },
+    {
+        "id": 4,
+        "enrollment": "ghi345",
+        "city": 6,
+        "brand": {
+            "id": 3,
+            "name": "Honda",
+            "image": "/uploads/brands/honda.png",
+            "created": "2018-10-09T03:28:02.226721Z",
+            "modified": "2018-10-09T03:28:02.226859Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Camioneta",
+            "image": "/uploads/kinds/camioneta_o5Hl3tQ.png"
+        },
+        "created": "2018-10-09T03:30:25.027814Z",
+        "modified": "2018-10-09T03:30:25.027883Z",
+        "state": 1
+    },
+    {
+        "id": 5,
+        "enrollment": "jkl456",
+        "city": 5,
+        "brand": {
+            "id": 1,
+            "name": "Mazda",
+            "image": "/uploads/brands/mazda.ico",
+            "created": "2018-10-09T03:27:40.100927Z",
+            "modified": "2018-10-09T03:27:40.100989Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Camioneta",
+            "image": "/uploads/kinds/camioneta_o5Hl3tQ.png"
+        },
+        "created": "2018-10-09T03:30:46.444454Z",
+        "modified": "2018-10-09T03:30:46.444517Z",
+        "state": 1
+    },
+    {
+        "id": 6,
+        "enrollment": "mno567",
+        "city": 4,
+        "brand": {
+            "id": 2,
+            "name": "Suzuki",
+            "image": "/uploads/brands/suzuki.png",
+            "created": "2018-10-09T03:27:50.289712Z",
+            "modified": "2018-10-09T03:27:50.289843Z",
+            "state": 1
+        },
+        "kind": {
+            "name": "Cami\u00f3n",
+            "image": "/uploads/kinds/cami%C3%B3n.png"
+        },
+        "created": "2018-10-09T03:31:04.223824Z",
+        "modified": "2018-10-09T03:31:04.223888Z",
+        "state": 1
+    }
+]
