@@ -7,23 +7,34 @@ from rest_framework.decorators import list_route
 
 from django.http import Http404
 from .models import Vehicle
+from brand.models import Brand
 from .serializers import VehicleSerializer,VehicleDTOForm
+from brand.serializers import BrandSerializer
 
 class VehicleTask(APIView):
 
     def get(self, request, format=None):
         id_ = request.GET.get('id')
-        if id_:
-            vehicle = Vehicle.objects.get(id=id_)
-        else:
-            clients = Vehicle.objects.all()
-            serializer = VehicleSerializer(clients, many=True)
-            return Response(serializer.data)
+        brand_ = request.GET.get('brand')      
+        try:
+            if id_:
+                vehicle = Vehicle.objects.get(id=id_)
+            elif brand_:
+                vehicles = Vehicle.objects.filter(brand_id=brand_)
+                serializer = VehicleSerializer(vehicles, many=True)
+                return Response(serializer.data)
+            else:
+                vehicles = Vehicle.objects.all()
+                serializer = VehicleSerializer(vehicles, many=True)
+                return Response(serializer.data)
 
-        if vehicle:
-            serializer = VehicleSerializer(vehicle)
-            return Response(serializer.data)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+            if vehicle:
+                serializer = VehicleSerializer(vehicle)
+                return Response(serializer.data)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     # def put(self, request, format=None):
     #     id = request.GET.get('id')

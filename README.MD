@@ -32,3 +32,15 @@ Finally:
 ```sh
 python3 manage.py loaddata datadump.json
 ```
+
+## Despliegue de versión para heroku
+
+```sh
+git push heroku master
+```
+
+## ingreso al bash de heroku
+
+```sh
+heroku run bash
+```
