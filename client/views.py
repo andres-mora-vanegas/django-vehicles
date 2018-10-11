@@ -37,8 +37,7 @@ class ClientTask(APIView):
         try:
             id=request.data.get('id')
             identification=request.data.get('identification')
-            response_data = None
-            print(request.data)
+            response_data = None            
             if id is not None:
                 client = Client.objects.get(id=id)
                 if client:
@@ -47,15 +46,11 @@ class ClientTask(APIView):
                         serializer.save()
                         return Response(serializer.data, status=status.HTTP_200_OK)
                 return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
-            else:
-                print('else')
-                client = Client.objects.filter(identification=identification).first()
-                print(client)
-                if client is None:
-                    print('none')
+            else:                
+                client = Client.objects.filter(identification=identification).first()                
+                if client is None:                
                     serializer = ClientSerializer(data=request.data)
-                    if serializer.is_valid():
-                        print('valid')
+                    if serializer.is_valid():                
                         serializer.save()
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 else:

@@ -5,7 +5,8 @@ from django import forms
 
 from state.serializers import StateSerializer
 from client.serializers import ClientSerializer
-from vehicle.serializers import VehicleSerializer
+from vehicle.serializers import VehicleSerializer,VehicleDTOForm
+
 
 class ClientVehicleSerializer(serializers.ModelSerializer):
     state = StateSerializer()
@@ -15,12 +16,6 @@ class ClientVehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClientVehicle
         fields = ('id', 'vehicle','client','state')
-
-class VehicleDTOForm(forms.Form):
-    enrollment = forms.CharField(max_length=100)
-    brand = forms.CharField(max_length=100)
-    city = forms.CharField(max_length=100)
-    kind = forms.CharField(max_length=100)
 
 class ClientVehicleDTOForm(forms.Form):
     client = ClientSerializer()

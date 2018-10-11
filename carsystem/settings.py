@@ -88,16 +88,24 @@ WSGI_APPLICATION = 'carsystem.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'defaulti': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'defaulti': {
+    'defaultii': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ambortkm',
         'USER': 'ambortkm',
         'HOST': 'pellefant.db.elephantsql.com',
         'PASSWORD': 'c--Pz_BlYToNyDREz_ENlmnrR01AxwVl',
+        'PORT': 5432,
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PASSWORD': 'postgress',
         'PORT': 5432,
     }
 }

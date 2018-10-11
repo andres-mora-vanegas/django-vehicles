@@ -20,17 +20,19 @@ from rest_framework import routers, serializers, viewsets
 from client import views as clientView
 from client_vehicle import views as clientVehicleView
 from city import views as cityView
+from vehicle import views as vehicleView
 from vehicle_kind import views as vehicleKindView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('brand.urls')),
-    url(r'^', include('vehicle.urls')),
+    url(r'^vehicle/$', vehicleView.VehicleTask.as_view()),
+    url(r'^manageVehicle/', include('vehicle.urls')),
     url(r'^client/$', clientView.ClientTask.as_view()),
     url(r'^clientVehicle/$', clientVehicleView.ClientVehicleTask.as_view()),    
     url(r'^city/$', cityView.CityTask.as_view()),
     url(r'^kind/$', vehicleKindView.VehicleKindTask.as_view()),
-    url(r'^manageVehicleEnroll/', include('client_vehicle.urls')),
+    url(r'^manageVehicle/', include('client_vehicle.urls')),
     url(r'^', include('state.urls')),
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

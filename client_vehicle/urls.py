@@ -10,5 +10,5 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url('valid', views.manageVehicleEnroll),
+    url('enroll', views.manageVehicleEnroll)
 ]
